@@ -9,14 +9,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: []
+      list: ['apple','peach','banana','broccoli','pear']
     }
   }
 
-  
   render () {
     return (
-      <GroceryList />
+      <GroceryList list={this.state.list}/>
     );
   }
 }
