@@ -8,7 +8,11 @@ class AddGrocery extends React.Component {
   }
 
   render () {
-    return null;
+    return (
+      <div>
+        <div>Description:<input /></div>
+        <div>Quantity:<input /><button type="addGrocery">Add Grocery</button></div>
+      </div>);
   }
 }
 
