@@ -29,43 +29,60 @@ class App extends React.Component {
   handleQuantityChange(event){
     this.setState({quantity: event.target.value});
   }
+
+  buildGroceryObject(){
+    //sets next item id
+    let nextItemId = Data.groceryList.length + 1;
+    let description = this.state.description;
+    let quantity = this.state.quantity;
+    let newItem = {id: nextItemId, quantity: quantity, description: description};
+    return newItem;
+  }
   
+  addGroceryObject(newItem){
+    //adds item to data file
+    Data.groceryList.push(newItem);
+  }
+  
+  resetState(){
+    //sets state to contain updated data
+    this.setState({
+      list: Data.groceryList,
+      description: null,
+      quantity: null
+      
+    });
+  }
+
   //handles a click from the Add Grocery! button
-  //IF SAME ITEM, UPDATE QUANTITY++
   handleClick(event) {
-    //list of groceries
-    let item = this.state.description;
-    let groceries = Data.groceryList.map(grocery => grocery.description);
-    //if entered grocery is included in groceries, loop through and add quantity
-    if (groceries.includes(item)) {
-      //alert('included');
-      Data.groceryList.forEach(function(grocery, index){
-        //console.log('item', item);
-        console.log(Data.groceryList[index]['description']);
-        if (Data.groceryList[index]['description'] === item) {
-          Data.groceryList['quantity'] += 1;
-          console.log('add 1');
-        }
-      });
-    }
-    //console.log(groceries);
-    if (this.state.description !== null){
-      //console.log(event);
-      //sets next item id
-      let nextItemId = Data.groceryList.length + 1;
-      let description = this.state.description;
-      let quantity = this.state.quantity;
-      let newItem = {id: nextItemId, quantity: quantity, description: description};
-      //adds item to data file
-      Data.groceryList.push(newItem);
-      //sets state to contain updated data
-      this.setState({
-        list: Data.groceryList,
-        description: null,
-        quantity: null
-        
-      });
-    }
+    //if contains data
+    if (this.state.description !== null && this.state.quantity !== null) {
+      console.log('clicked');
+      let item = this.state.description;
+      let groceries = Data.groceryList.map(grocery => grocery.description);
+      
+      let newItem = this.buildGroceryObject();
+      this.addGroceryObject(newItem);
+      console.log(groceries);
+      this.resetState();
+      // //if grocery list doesn't include item, add to list
+      // if (groceries.includes(item) === false){
+      //   let newItem = this.buildGroceryObject();
+      //   this.addGroceryObject(newItem);
+      //   console.log(this.state.list);
+      // //if grocery list includes item, increment list by 1
+      // } else {
+      //   Data.groceryList.forEach(function(grocery, index){
+      //     //console.log('item', item);
+      //     console.log(Data.groceryList[index]['description']);
+      //     if (Data.groceryList[index]['description'] === item) {
+      //       Data.groceryList['quantity'] += 1;
+      //       console.log('add 1');
+      //     }
+      //   });
+      // }  
+    } 
   }
   
   render () {
